@@ -1,0 +1,943 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://sgssidhnl002.seagate.com:8101/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sgssidhnl002.seagate.com:8101/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sgssidhnl002.seagate.com:8101/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sgssidhnl002.seagate.com:8101/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sgssidhnl002.seagate.com:8101/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZM_TRAV_REQ_CDS" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="I_DraftAdministrativeDataType" sap:label="Draft Administration Data" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false" sap:label="Draft (Technical ID)"/>
+                <Property Name="DraftEntityType" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="Draft Entity ID"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Draft Created On"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:text="CreatedByUserDescription" sap:label="Draft Created By"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Draft Last Changed On"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:text="LastChangedByUserDescription" sap:label="Draft Last Changed By"/>
+                <Property Name="DraftAccessType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Draft Access Type"/>
+                <Property Name="ProcessingStartDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Draft In Process Since"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:text="InProcessByUserDescription" sap:label="Draft In Process By"/>
+                <Property Name="DraftIsKeptByUser" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Draft Is Kept By User"/>
+                <Property Name="EnqueueStartDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Draft Locked Since"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Draft Created By Me"/>
+                <Property Name="DraftIsLastChangedByMe" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Draft Last Changed By Me"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Draft In Process By Me"/>
+                <Property Name="CreatedByUserDescription" Type="Edm.String" MaxLength="80" sap:label="Draft Created By (Description)"/>
+                <Property Name="LastChangedByUserDescription" Type="Edm.String" MaxLength="80" sap:label="Draft Last Changed By (Description)"/>
+                <Property Name="InProcessByUserDescription" Type="Edm.String" MaxLength="80" sap:label="Draft In Process By (Description)"/>
+            </EntityType>
+            <EntityType Name="ZM_TRAV_REQType" sap:label="Travel Request" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Travreq"/>
+                    <PropertyRef Name="DraftUUID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="Activation_ac" Type="Edm.Boolean" sap:label="Dyn. Action Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Edit_ac" Type="Edm.Boolean" sap:label="Dyn. Action Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Preparation_ac" Type="Edm.Boolean" sap:label="Dyn. Action Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Validation_ac" Type="Edm.Boolean" sap:label="Dyn. Action Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Travreq" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Request Number" sap:quickinfo="Object ID"/>
+                <Property Name="Icno" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="ID" sap:quickinfo="Char 20" sap:value-list="standard"/>
+                <Property Name="Staffid" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Staff Id" sap:quickinfo="Char 20" sap:value-list="standard"/>
+                <Property Name="fullname" Type="Edm.String" MaxLength="80" sap:label="Full Name" sap:quickinfo="Full Name of Person" sap:value-list="standard"/>
+                <Property Name="companycode" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code" sap:value-list="standard"/>
+                <Property Name="deparment" Type="Edm.String" MaxLength="40" sap:label="Department" sap:value-list="standard"/>
+                <Property Name="positn" Type="Edm.String" MaxLength="25" sap:label="Position" sap:value-list="standard"/>
+                <Property Name="contact" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Contact Number" sap:quickinfo="Contact" sap:value-list="standard"/>
+                <Property Name="email" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Email" sap:value-list="standard"/>
+                <Property Name="Passport" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Passport" sap:quickinfo="Char 20"/>
+                <Property Name="postioncode" Type="Edm.String" MaxLength="25" sap:label="Position 2" sap:quickinfo="Position"/>
+                <Property Name="Prjcode" Type="Edm.String" MaxLength="24" sap:display-format="UpperCase" sap:label="Project Code" sap:quickinfo="Work Breakdown Structure Element (WBS Element)" sap:value-list="standard"/>
+                <Property Name="post1" Type="Edm.String" MaxLength="40" sap:label="Project Name" sap:quickinfo="PS: Short description (1st text line)" sap:value-list="standard"/>
+                <Property Name="Coscode" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Cost Center" sap:value-list="standard"/>
+                <Property Name="costext" Type="Edm.String" MaxLength="40" sap:label="Cost Center Name" sap:quickinfo="Description" sap:value-list="standard"/>
+                <Property Name="fldate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Flight Date" sap:quickinfo="Field of type DATS"/>
+                <Property Name="FlCode" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Airline Code" sap:value-list="standard"/>
+                <Property Name="FlConn" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Connection Number" sap:quickinfo="Flight Connection Number"/>
+                <Property Name="CityFrom" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="City From" sap:quickinfo="Departure city" sap:value-list="standard"/>
+                <Property Name="CityTo" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="City To" sap:quickinfo="Arrival city" sap:value-list="standard"/>
+                <Property Name="FlEta" Type="Edm.Time" Precision="0" sap:label="ETA" sap:quickinfo="Field of type TIMS"/>
+                <Property Name="FlEtd" Type="Edm.Time" Precision="0" sap:label="ETD" sap:quickinfo="Field of type TIMS"/>
+                <Property Name="Hid" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="Object ID"/>
+                <Property Name="hotel" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Hotel Name" sap:quickinfo="Char255" sap:value-list="standard"/>
+                <Property Name="hotelCity" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="City" sap:quickinfo="Char255"/>
+                <Property Name="HNightnos" Type="Edm.Int16" sap:label="No. of Night" sap:quickinfo="2 Byte Signed Integer"/>
+                <Property Name="HCheckindat" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Check-in Date" sap:quickinfo="Field of type DATS"/>
+                <Property Name="HCheckintm" Type="Edm.Time" Precision="0" sap:label="Check-in Time" sap:quickinfo="Field of type TIMS"/>
+                <Property Name="HCheckoutdat" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Check-out Date" sap:quickinfo="Field of type DATS"/>
+                <Property Name="HCheckouttm" Type="Edm.Time" Precision="0" sap:label="Check-Out Time" sap:quickinfo="Field of type TIMS"/>
+                <Property Name="Vehicle" Type="Edm.String" MaxLength="50" sap:label="Vehicle Type" sap:quickinfo="Comment"/>
+                <Property Name="VModel" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Model" sap:quickinfo="Char 20"/>
+                <Property Name="VRtdate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Rental Date" sap:quickinfo="Field of type DATS"/>
+                <Property Name="VRttime" Type="Edm.Time" Precision="0" sap:label="Rental Time" sap:quickinfo="Field of type TIMS"/>
+                <Property Name="VRetdate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Return Date" sap:quickinfo="Field of type DATS"/>
+                <Property Name="VRettime" Type="Edm.Time" Precision="0" sap:label="Return Time" sap:quickinfo="Field of type TIMS"/>
+                <Property Name="Purpose" Type="Edm.String" MaxLength="255" sap:label="Purpose" sap:quickinfo="Character value"/>
+                <Property Name="Createdon" Type="Edm.DateTimeOffset" Precision="0" sap:label="Time Stamp" sap:quickinfo="UTC Time Stamp in Short Form (YYYYMMDDhhmmss)"/>
+                <Property Name="Lastupdateon" Type="Edm.DateTimeOffset" Precision="0" sap:label="Time Stamp" sap:quickinfo="UTC Time Stamp in Short Form (YYYYMMDDhhmmss)"/>
+                <Property Name="status" Type="Edm.String" MaxLength="22"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Has Draft" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false" sap:label="Key" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="DraftEntityCreationDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Draft Created On" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="DraftEntityLastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Draft Last Changed On" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Has active" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" sap:display-format="UpperCase" sap:label="Is active" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Relationship="ZM_TRAV_REQ_CDS.assoc_951D3F1849F2A10FF2368A06A0A66CB8" FromRole="FromRole_assoc_951D3F1849F2A10FF2368A06A0A66CB8" ToRole="ToRole_assoc_951D3F1849F2A10FF2368A06A0A66CB8"/>
+                <NavigationProperty Name="SiblingEntity" Relationship="ZM_TRAV_REQ_CDS.assoc_70484028F193A74799A425468F71103F" FromRole="FromRole_assoc_70484028F193A74799A425468F71103F" ToRole="ToRole_assoc_70484028F193A74799A425468F71103F"/>
+                <NavigationProperty Name="to_flight" Relationship="ZM_TRAV_REQ_CDS.assoc_67D7ED1457321B24DA98A69C5BE57FA5" FromRole="FromRole_assoc_67D7ED1457321B24DA98A69C5BE57FA5" ToRole="ToRole_assoc_67D7ED1457321B24DA98A69C5BE57FA5"/>
+                <NavigationProperty Name="to_subord" Relationship="ZM_TRAV_REQ_CDS.assoc_22753827C1E2FB1D5BAD9ED09AE68221" FromRole="FromRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221" ToRole="ToRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221"/>
+            </EntityType>
+            <EntityType Name="Z_CSKSType" sap:label="Cost Center" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="kostl"/>
+                </Key>
+                <Property Name="kostl" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Cost Center"/>
+                <Property Name="bukrs" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code"/>
+                <Property Name="ltext" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+            </EntityType>
+            <EntityType Name="Z_FLIGHT_INFOType" sap:label="Flight Details" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Carrid"/>
+                    <PropertyRef Name="Connid"/>
+                </Key>
+                <Property Name="Carrid" Type="Edm.String" Nullable="false" MaxLength="3" sap:display-format="UpperCase" sap:label="Airline" sap:quickinfo="Airline Code"/>
+                <Property Name="Connid" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Connection Number" sap:quickinfo="Flight Connection Number"/>
+                <Property Name="Cityfrom" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Depart. city" sap:quickinfo="Departure city"/>
+                <Property Name="Cityto" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Arrival city"/>
+            </EntityType>
+            <EntityType Name="Z_HOTEL_INFOType" sap:label="Hotel Info" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Hid"/>
+                </Key>
+                <Property Name="Hid" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Hotel Id" sap:quickinfo="Object ID"/>
+                <Property Name="Hname" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Hotel Name" sap:quickinfo="Char255"/>
+                <Property Name="Hcity" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Hotel City" sap:quickinfo="Char255"/>
+            </EntityType>
+            <EntityType Name="Z_PRPSType" sap:label="Project Code" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="pspnr"/>
+                </Key>
+                <Property Name="pspnr" Type="Edm.String" Nullable="false" MaxLength="24" sap:display-format="NonNegative" sap:label="WBS Element"/>
+                <Property Name="pbukr" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company code" sap:quickinfo="Company code for WBS element"/>
+                <Property Name="posid" Type="Edm.String" MaxLength="24" sap:display-format="UpperCase" sap:label="WBS element" sap:quickinfo="Work Breakdown Structure Element (WBS Element)"/>
+                <Property Name="post1" Type="Edm.String" MaxLength="40" sap:label="Description" sap:quickinfo="PS: Short description (1st text line)"/>
+            </EntityType>
+            <EntityType Name="Z_STAFF_INFOType" sap:label="Staff Info" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Staffid"/>
+                    <PropertyRef Name="Icno"/>
+                </Key>
+                <Property Name="Staffid" Type="Edm.String" Nullable="false" MaxLength="20" sap:display-format="UpperCase" sap:label="Staff ID" sap:quickinfo="Char 20"/>
+                <Property Name="Icno" Type="Edm.String" Nullable="false" MaxLength="20" sap:display-format="UpperCase" sap:label="ID" sap:quickinfo="Char 20"/>
+                <Property Name="Fullname" Type="Edm.String" MaxLength="80" sap:label="Full Name" sap:quickinfo="Full Name of Person"/>
+                <Property Name="Cocode" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code"/>
+                <Property Name="Dept" Type="Edm.String" MaxLength="40" sap:label="Department"/>
+                <Property Name="Passport" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Char20" sap:quickinfo="Char 20"/>
+                <Property Name="Positn" Type="Edm.String" MaxLength="25" sap:label="Position"/>
+                <Property Name="Contact" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Contact"/>
+                <Property Name="Email" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Email"/>
+            </EntityType>
+            <EntityType Name="Z_SUBORD_DETAILSType" sap:label="Subordinate Details" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Travreq"/>
+                    <PropertyRef Name="Icno"/>
+                    <PropertyRef Name="seqno"/>
+                    <PropertyRef Name="DraftUUID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="Preparation_ac" Type="Edm.Boolean" sap:label="Dyn. Action Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Validation_ac" Type="Edm.Boolean" sap:label="Dyn. Action Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Travreq" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Object ID"/>
+                <Property Name="Icno" Type="Edm.String" Nullable="false" MaxLength="20" sap:display-format="UpperCase" sap:label="Char20" sap:quickinfo="Char 20"/>
+                <Property Name="seqno" Type="Edm.Int16" Nullable="false" sap:label="INT2" sap:quickinfo="2 Byte Signed Integer"/>
+                <Property Name="Subord" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Subordinate ID" sap:quickinfo="Char 20"/>
+                <Property Name="subordname" Type="Edm.String" MaxLength="80" sap:label="Name" sap:quickinfo="Full Name of Person"/>
+                <Property Name="suborddept" Type="Edm.String" MaxLength="40" sap:label="Department"/>
+                <Property Name="subordpos" Type="Edm.String" MaxLength="25" sap:label="Position"/>
+                <Property Name="subordemail" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Email"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Has Draft" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false" sap:label="Key" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ParentDraftUUID" Type="Edm.Guid" sap:label="Key" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="DraftEntityCreationDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Draft Created On" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="DraftEntityLastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Draft Last Changed On" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Has active" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" sap:display-format="UpperCase" sap:label="Is active" sap:heading="" sap:quickinfo="" sap:creatable="false" sap:updatable="false"/>
+                <NavigationProperty Name="to_header" Relationship="ZM_TRAV_REQ_CDS.assoc_22753827C1E2FB1D5BAD9ED09AE68221" FromRole="ToRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221" ToRole="FromRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221"/>
+                <NavigationProperty Name="DraftAdministrativeData" Relationship="ZM_TRAV_REQ_CDS.assoc_CB1D035F847F959EBB98F80019FBB078" FromRole="FromRole_assoc_CB1D035F847F959EBB98F80019FBB078" ToRole="ToRole_assoc_CB1D035F847F959EBB98F80019FBB078"/>
+                <NavigationProperty Name="SiblingEntity" Relationship="ZM_TRAV_REQ_CDS.assoc_BC480F261A63F63EA7AF9DFFD258C7FD" FromRole="FromRole_assoc_BC480F261A63F63EA7AF9DFFD258C7FD" ToRole="ToRole_assoc_BC480F261A63F63EA7AF9DFFD258C7FD"/>
+            </EntityType>
+            <ComplexType Name="ValidationFunctionResult">
+                <Property Name="IsValid" Type="Edm.Boolean" sap:label="Is valid"/>
+            </ComplexType>
+            <Association Name="assoc_CB1D035F847F959EBB98F80019FBB078" sap:content-version="1">
+                <End Type="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" Multiplicity="1" Role="FromRole_assoc_CB1D035F847F959EBB98F80019FBB078"/>
+                <End Type="ZM_TRAV_REQ_CDS.I_DraftAdministrativeDataType" Multiplicity="0..1" Role="ToRole_assoc_CB1D035F847F959EBB98F80019FBB078"/>
+            </Association>
+            <Association Name="assoc_BC480F261A63F63EA7AF9DFFD258C7FD" sap:content-version="1">
+                <End Type="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" Multiplicity="1" Role="FromRole_assoc_BC480F261A63F63EA7AF9DFFD258C7FD"/>
+                <End Type="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" Multiplicity="0..1" Role="ToRole_assoc_BC480F261A63F63EA7AF9DFFD258C7FD"/>
+            </Association>
+            <Association Name="assoc_70484028F193A74799A425468F71103F" sap:content-version="1">
+                <End Type="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" Multiplicity="1" Role="FromRole_assoc_70484028F193A74799A425468F71103F"/>
+                <End Type="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" Multiplicity="0..1" Role="ToRole_assoc_70484028F193A74799A425468F71103F"/>
+            </Association>
+            <Association Name="assoc_67D7ED1457321B24DA98A69C5BE57FA5" sap:content-version="1">
+                <End Type="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" Multiplicity="1" Role="FromRole_assoc_67D7ED1457321B24DA98A69C5BE57FA5"/>
+                <End Type="ZM_TRAV_REQ_CDS.Z_FLIGHT_INFOType" Multiplicity="0..1" Role="ToRole_assoc_67D7ED1457321B24DA98A69C5BE57FA5"/>
+            </Association>
+            <Association Name="assoc_22753827C1E2FB1D5BAD9ED09AE68221" sap:content-version="1">
+                <End Type="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" Multiplicity="1" Role="FromRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221">
+                    <OnDelete Action="Cascade"/>
+                </End>
+                <End Type="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" Multiplicity="*" Role="ToRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221">
+                        <PropertyRef Name="Travreq"/>
+                    </Principal>
+                    <Dependent Role="ToRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221">
+                        <PropertyRef Name="Travreq"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="assoc_951D3F1849F2A10FF2368A06A0A66CB8" sap:content-version="1">
+                <End Type="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" Multiplicity="1" Role="FromRole_assoc_951D3F1849F2A10FF2368A06A0A66CB8"/>
+                <End Type="ZM_TRAV_REQ_CDS.I_DraftAdministrativeDataType" Multiplicity="0..1" Role="ToRole_assoc_951D3F1849F2A10FF2368A06A0A66CB8"/>
+            </Association>
+            <EntityContainer Name="ZM_TRAV_REQ_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="I_DraftAdministrativeData" EntityType="ZM_TRAV_REQ_CDS.I_DraftAdministrativeDataType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZM_TRAV_REQ" EntityType="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" sap:content-version="1" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc"/>
+                <EntitySet Name="Z_CSKS" EntityType="ZM_TRAV_REQ_CDS.Z_CSKSType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="Z_FLIGHT_INFO" EntityType="ZM_TRAV_REQ_CDS.Z_FLIGHT_INFOType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="Z_HOTEL_INFO" EntityType="ZM_TRAV_REQ_CDS.Z_HOTEL_INFOType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="Z_PRPS" EntityType="ZM_TRAV_REQ_CDS.Z_PRPSType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="Z_STAFF_INFO" EntityType="ZM_TRAV_REQ_CDS.Z_STAFF_INFOType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="Z_SUBORD_DETAILS" EntityType="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" sap:content-version="1"/>
+                <AssociationSet Name="assoc_70484028F193A74799A425468F71103F" Association="ZM_TRAV_REQ_CDS.assoc_70484028F193A74799A425468F71103F" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZM_TRAV_REQ" Role="FromRole_assoc_70484028F193A74799A425468F71103F"/>
+                    <End EntitySet="ZM_TRAV_REQ" Role="ToRole_assoc_70484028F193A74799A425468F71103F"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_951D3F1849F2A10FF2368A06A0A66CB8" Association="ZM_TRAV_REQ_CDS.assoc_951D3F1849F2A10FF2368A06A0A66CB8" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZM_TRAV_REQ" Role="FromRole_assoc_951D3F1849F2A10FF2368A06A0A66CB8"/>
+                    <End EntitySet="I_DraftAdministrativeData" Role="ToRole_assoc_951D3F1849F2A10FF2368A06A0A66CB8"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_22753827C1E2FB1D5BAD9ED09AE68221" Association="ZM_TRAV_REQ_CDS.assoc_22753827C1E2FB1D5BAD9ED09AE68221" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZM_TRAV_REQ" Role="FromRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221"/>
+                    <End EntitySet="Z_SUBORD_DETAILS" Role="ToRole_assoc_22753827C1E2FB1D5BAD9ED09AE68221"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_67D7ED1457321B24DA98A69C5BE57FA5" Association="ZM_TRAV_REQ_CDS.assoc_67D7ED1457321B24DA98A69C5BE57FA5" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZM_TRAV_REQ" Role="FromRole_assoc_67D7ED1457321B24DA98A69C5BE57FA5"/>
+                    <End EntitySet="Z_FLIGHT_INFO" Role="ToRole_assoc_67D7ED1457321B24DA98A69C5BE57FA5"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_CB1D035F847F959EBB98F80019FBB078" Association="ZM_TRAV_REQ_CDS.assoc_CB1D035F847F959EBB98F80019FBB078" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Z_SUBORD_DETAILS" Role="FromRole_assoc_CB1D035F847F959EBB98F80019FBB078"/>
+                    <End EntitySet="I_DraftAdministrativeData" Role="ToRole_assoc_CB1D035F847F959EBB98F80019FBB078"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_BC480F261A63F63EA7AF9DFFD258C7FD" Association="ZM_TRAV_REQ_CDS.assoc_BC480F261A63F63EA7AF9DFFD258C7FD" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Z_SUBORD_DETAILS" Role="FromRole_assoc_BC480F261A63F63EA7AF9DFFD258C7FD"/>
+                    <End EntitySet="Z_SUBORD_DETAILS" Role="ToRole_assoc_BC480F261A63F63EA7AF9DFFD258C7FD"/>
+                </AssociationSet>
+                <FunctionImport Name="ZM_TRAV_REQActivation" ReturnType="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" EntitySet="ZM_TRAV_REQ" m:HttpMethod="POST" sap:action-for="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" sap:applicable-path="Activation_ac">
+                    <Parameter Name="Travreq" Type="Edm.String" Mode="In" MaxLength="8"/>
+                    <Parameter Name="DraftUUID" Type="Edm.Guid" Mode="In"/>
+                    <Parameter Name="IsActiveEntity" Type="Edm.Boolean" Mode="In"/>
+                </FunctionImport>
+                <FunctionImport Name="ZM_TRAV_REQEdit" ReturnType="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" EntitySet="ZM_TRAV_REQ" m:HttpMethod="POST" sap:action-for="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" sap:applicable-path="Edit_ac">
+                    <Parameter Name="Travreq" Type="Edm.String" Mode="In" MaxLength="8"/>
+                    <Parameter Name="DraftUUID" Type="Edm.Guid" Mode="In"/>
+                    <Parameter Name="IsActiveEntity" Type="Edm.Boolean" Mode="In"/>
+                    <Parameter Name="PreserveChanges" Type="Edm.Boolean" Mode="In" Nullable="true"/>
+                </FunctionImport>
+                <FunctionImport Name="ZM_TRAV_REQPreparation" ReturnType="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" EntitySet="ZM_TRAV_REQ" m:HttpMethod="POST" sap:action-for="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" sap:applicable-path="Preparation_ac">
+                    <Parameter Name="Travreq" Type="Edm.String" Mode="In" MaxLength="8"/>
+                    <Parameter Name="DraftUUID" Type="Edm.Guid" Mode="In"/>
+                    <Parameter Name="IsActiveEntity" Type="Edm.Boolean" Mode="In"/>
+                    <Parameter Name="SideEffectsQualifier" Type="Edm.String" Mode="In" Nullable="true"/>
+                </FunctionImport>
+                <FunctionImport Name="ZM_TRAV_REQValidation" ReturnType="ZM_TRAV_REQ_CDS.ValidationFunctionResult" m:HttpMethod="GET" sap:action-for="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType" sap:applicable-path="Validation_ac">
+                    <Parameter Name="Travreq" Type="Edm.String" Mode="In" MaxLength="8"/>
+                    <Parameter Name="DraftUUID" Type="Edm.Guid" Mode="In"/>
+                    <Parameter Name="IsActiveEntity" Type="Edm.Boolean" Mode="In"/>
+                    <Parameter Name="SideEffectsQualifier" Type="Edm.String" Mode="In" Nullable="true"/>
+                </FunctionImport>
+                <FunctionImport Name="Z_SUBORD_DETAILSPreparation" ReturnType="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" EntitySet="Z_SUBORD_DETAILS" m:HttpMethod="POST" sap:action-for="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" sap:applicable-path="Preparation_ac">
+                    <Parameter Name="Travreq" Type="Edm.String" Mode="In" MaxLength="8"/>
+                    <Parameter Name="Icno" Type="Edm.String" Mode="In" MaxLength="20"/>
+                    <Parameter Name="seqno" Type="Edm.Int16" Mode="In"/>
+                    <Parameter Name="DraftUUID" Type="Edm.Guid" Mode="In"/>
+                    <Parameter Name="IsActiveEntity" Type="Edm.Boolean" Mode="In"/>
+                    <Parameter Name="SideEffectsQualifier" Type="Edm.String" Mode="In" Nullable="true"/>
+                </FunctionImport>
+                <FunctionImport Name="Z_SUBORD_DETAILSValidation" ReturnType="ZM_TRAV_REQ_CDS.ValidationFunctionResult" m:HttpMethod="GET" sap:action-for="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" sap:applicable-path="Validation_ac">
+                    <Parameter Name="Travreq" Type="Edm.String" Mode="In" MaxLength="8"/>
+                    <Parameter Name="Icno" Type="Edm.String" Mode="In" MaxLength="20"/>
+                    <Parameter Name="seqno" Type="Edm.Int16" Mode="In"/>
+                    <Parameter Name="DraftUUID" Type="Edm.Guid" Mode="In"/>
+                    <Parameter Name="IsActiveEntity" Type="Edm.Boolean" Mode="In"/>
+                    <Parameter Name="SideEffectsQualifier" Type="Edm.String" Mode="In" Nullable="true"/>
+                </FunctionImport>
+            </EntityContainer>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/ZM_TRAV_REQ" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.DraftRoot">
+                    <Record>
+                        <PropertyValue Property="ActivationAction" String="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/ZM_TRAV_REQActivation"/>
+                        <PropertyValue Property="EditAction" String="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/ZM_TRAV_REQEdit"/>
+                        <PropertyValue Property="PreparationAction" String="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/ZM_TRAV_REQPreparation"/>
+                        <PropertyValue Property="ValidationFunction" String="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/ZM_TRAV_REQValidation"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>Activation_ac</PropertyPath>
+                                <PropertyPath>Edit_ac</PropertyPath>
+                                <PropertyPath>Preparation_ac</PropertyPath>
+                                <PropertyPath>Validation_ac</PropertyPath>
+                                <PropertyPath>Delete_mc</PropertyPath>
+                                <PropertyPath>Update_mc</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>Activation_ac</PropertyPath>
+                                <PropertyPath>Edit_ac</PropertyPath>
+                                <PropertyPath>Preparation_ac</PropertyPath>
+                                <PropertyPath>Validation_ac</PropertyPath>
+                                <PropertyPath>Delete_mc</PropertyPath>
+                                <PropertyPath>Update_mc</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/Z_SUBORD_DETAILS" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.DraftNode">
+                    <Record>
+                        <PropertyValue Property="PreparationAction" String="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/Z_SUBORD_DETAILSPreparation"/>
+                        <PropertyValue Property="ValidationFunction" String="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/Z_SUBORD_DETAILSValidation"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.DraftActivationVia">
+                    <Collection>
+                        <String>ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities/ZM_TRAV_REQ</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>Preparation_ac</PropertyPath>
+                                <PropertyPath>Validation_ac</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>Preparation_ac</PropertyPath>
+                                <PropertyPath>Validation_ac</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/Icno" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Staff Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_STAFF_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Icno"/>
+                                    <PropertyValue Property="ValueListProperty" String="Icno"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="fullname"/>
+                                    <PropertyValue Property="ValueListProperty" String="Fullname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="companycode"/>
+                                    <PropertyValue Property="ValueListProperty" String="Cocode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="deparment"/>
+                                    <PropertyValue Property="ValueListProperty" String="Dept"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="positn"/>
+                                    <PropertyValue Property="ValueListProperty" String="Positn"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="contact"/>
+                                    <PropertyValue Property="ValueListProperty" String="Contact"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="email"/>
+                                    <PropertyValue Property="ValueListProperty" String="Email"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Staffid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Passport"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/Staffid" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Staff Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_STAFF_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Staffid"/>
+                                    <PropertyValue Property="ValueListProperty" String="Staffid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Icno"/>
+                                    <PropertyValue Property="ValueListProperty" String="Icno"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="fullname"/>
+                                    <PropertyValue Property="ValueListProperty" String="Fullname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="companycode"/>
+                                    <PropertyValue Property="ValueListProperty" String="Cocode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="deparment"/>
+                                    <PropertyValue Property="ValueListProperty" String="Dept"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="positn"/>
+                                    <PropertyValue Property="ValueListProperty" String="Positn"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="contact"/>
+                                    <PropertyValue Property="ValueListProperty" String="Contact"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="email"/>
+                                    <PropertyValue Property="ValueListProperty" String="Email"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Passport"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/fullname" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Staff Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_STAFF_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="fullname"/>
+                                    <PropertyValue Property="ValueListProperty" String="Fullname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Staffid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Icno"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Cocode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Dept"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Passport"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Positn"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Contact"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Email"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/companycode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Staff Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_STAFF_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="companycode"/>
+                                    <PropertyValue Property="ValueListProperty" String="Cocode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Staffid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Icno"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Fullname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Dept"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Passport"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Positn"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Contact"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Email"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/deparment" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Staff Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_STAFF_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="deparment"/>
+                                    <PropertyValue Property="ValueListProperty" String="Dept"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Staffid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Icno"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Fullname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Cocode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Passport"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Positn"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Contact"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Email"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/positn" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Staff Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_STAFF_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="positn"/>
+                                    <PropertyValue Property="ValueListProperty" String="Positn"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Staffid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Icno"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Fullname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Cocode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Dept"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Passport"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Contact"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Email"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/contact" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Staff Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_STAFF_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="contact"/>
+                                    <PropertyValue Property="ValueListProperty" String="Contact"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Staffid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Icno"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Fullname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Cocode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Dept"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Passport"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Positn"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Email"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/email" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Staff Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_STAFF_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="email"/>
+                                    <PropertyValue Property="ValueListProperty" String="Email"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Staffid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Icno"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Fullname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Cocode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Dept"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Passport"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Positn"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Contact"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/Prjcode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Project Code"/>
+                        <PropertyValue Property="CollectionPath" String="Z_PRPS"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Prjcode"/>
+                                    <PropertyValue Property="ValueListProperty" String="posid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="post1"/>
+                                    <PropertyValue Property="ValueListProperty" String="post1"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="pspnr"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="pbukr"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/post1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Project Code"/>
+                        <PropertyValue Property="CollectionPath" String="Z_PRPS"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Prjcode"/>
+                                    <PropertyValue Property="ValueListProperty" String="posid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="post1"/>
+                                    <PropertyValue Property="ValueListProperty" String="post1"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="pspnr"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="pbukr"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/Coscode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Cost Center"/>
+                        <PropertyValue Property="CollectionPath" String="Z_CSKS"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Coscode"/>
+                                    <PropertyValue Property="ValueListProperty" String="kostl"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="costext"/>
+                                    <PropertyValue Property="ValueListProperty" String="ltext"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="bukrs"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/costext" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Cost Center"/>
+                        <PropertyValue Property="CollectionPath" String="Z_CSKS"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Coscode"/>
+                                    <PropertyValue Property="ValueListProperty" String="kostl"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="costext"/>
+                                    <PropertyValue Property="ValueListProperty" String="ltext"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="bukrs"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/FlCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Flight Details"/>
+                        <PropertyValue Property="CollectionPath" String="Z_FLIGHT_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FlCode"/>
+                                    <PropertyValue Property="ValueListProperty" String="Carrid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FlConn"/>
+                                    <PropertyValue Property="ValueListProperty" String="Connid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="CityFrom"/>
+                                    <PropertyValue Property="ValueListProperty" String="Cityfrom"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="CityTo"/>
+                                    <PropertyValue Property="ValueListProperty" String="Cityto"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/CityFrom" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Flight Details"/>
+                        <PropertyValue Property="CollectionPath" String="Z_FLIGHT_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FlCode"/>
+                                    <PropertyValue Property="ValueListProperty" String="Carrid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="CityFrom"/>
+                                    <PropertyValue Property="ValueListProperty" String="Cityfrom"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Connid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Cityto"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/CityTo" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Flight Details"/>
+                        <PropertyValue Property="CollectionPath" String="Z_FLIGHT_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FlCode"/>
+                                    <PropertyValue Property="ValueListProperty" String="Carrid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="CityTo"/>
+                                    <PropertyValue Property="ValueListProperty" String="Cityto"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Connid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Cityfrom"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQType/hotel" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Hotel Info"/>
+                        <PropertyValue Property="CollectionPath" String="Z_HOTEL_INFO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Hid"/>
+                                    <PropertyValue Property="ValueListProperty" String="Hid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="hotel"/>
+                                    <PropertyValue Property="ValueListProperty" String="Hname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Hcity"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.ZM_TRAV_REQ_CDS_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup" EnumMember="None"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZM_TRAV_REQ_CDS.Z_SUBORD_DETAILSType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.SemanticKey">
+                    <Collection>
+                        <PropertyPath>Subord</PropertyPath>
+                        <PropertyPath>Icno</PropertyPath>
+                        <PropertyPath>Travreq</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self" href="https://sgssidhnl002.seagate.com:8101/sap/opu/odata/sap/ZM_TRAV_REQ_CDS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://sgssidhnl002.seagate.com:8101/sap/opu/odata/sap/ZM_TRAV_REQ_CDS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

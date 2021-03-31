@@ -1,0 +1,42 @@
+specVersion: '1.0'
+metadata:
+  name: 'travel'
+type: application
+ui5Theme: sap_fiori_3
+server:
+  customMiddleware:
+  - name: fiori-tools-proxy
+    afterMiddleware: compression
+    configuration:
+      ignoreCertError: true # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+      backend:
+      - path: /sap
+        url: https://sgssidhnl002.seagate.com:8101
+      ui5:
+        path: 
+        - /resources
+        - /test-resources
+        url: https://ui5.sap.com
+        version:  # The UI5 version, for instance, 1.78.1. Empty means latest version
+  - name: fiori-tools-appreload
+    afterMiddleware: compression
+    configuration:
+     port: 35729
+     path: webapp
+---
+specVersion: '2.1'
+kind: extension
+type: project-shim
+metadata:
+  name: thirdparty # this can be your project shim name
+shims:
+  configurations:
+    lodash: # name as defined in package.json
+      specVersion: '2.1'
+      type: module # Use module type
+      metadata:
+        name: lodash
+      resources:
+        configuration:
+          paths:
+            /resources/thirdparty/lodash/: ''  
