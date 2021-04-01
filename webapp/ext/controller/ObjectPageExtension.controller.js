@@ -1,10 +1,10 @@
 jQuery.sap.require("sap.m.MessageBox");
 jQuery.sap.require("sap.suite.ui.generic.template.extensionAPI.extensionAPI");
-jQuery.sap.require("com.sap.fiori.travel.libs.pdfmake");
+jQuery.sap.require("com.sap.fiori.travel.libs.html2pdf");
 sap.ui.controller("com.sap.fiori.travel.ext.controller.ObjectPageExtension", {
 
-    onInit: function () { 
-         debugger;                
+    onInit: function () {
+                        
     },
 
     handlePrint: function(){
@@ -20,26 +20,18 @@ sap.ui.controller("com.sap.fiori.travel.ext.controller.ObjectPageExtension", {
                 });
             return;
         }
-
-
-        //var ident = document.getElementById("com.sap.fiori.travel.reqest::sap.suite.ui.generic.template.ObjectPage.view.Details::ZM_TRAV_REQ--objectPage-opwrapper");
         var ident = ""
-        
-        $.get({url: "https://www.sparksuite.com/images/logo.png", success: function( data ) { }, async: false });
         $.get({url: "../libs/pdfformat.html", success: function( data ) { ident = data; }, async: false });
         
-
-
+        
         var opt = {
             margin: 1,
             filename: 'myfile.pdf',
-            image: { type: 'png', quality: 0.98 },
+            image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
         html2pdf().from(ident).set(opt).save();
-    }
-
-    
+    }    
 });
 

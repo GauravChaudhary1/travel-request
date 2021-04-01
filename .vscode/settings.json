@@ -1,0 +1,14 @@
+{
+    "abapfs.remote": {
+        "S4X": {
+            "name": "S4X",
+            "url": "https://sgssidhnl002.seagate.com:8101",
+            "username": "931378",
+            "password": "",
+            "language": "en",
+            "client": "100",
+            "allowSelfSigned": false,
+            "diff_formatter": "ADT formatter"
+        }
+    }
+}

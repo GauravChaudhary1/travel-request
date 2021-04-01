@@ -40,3 +40,12 @@ shims:
         configuration:
           paths:
             /resources/thirdparty/lodash/: ''  
+    jspdf: # name as defined in package.json
+      specVersion: '2.1'
+      type: module # Use module type
+      metadata:
+        name: jspdf
+      resources:
+        configuration:
+          paths:
+            /resources/thirdparty/jspdf/: ''
