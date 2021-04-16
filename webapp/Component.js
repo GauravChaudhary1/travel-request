@@ -5,10 +5,12 @@ sap.ui.define(['sap/suite/ui/generic/template/lib/AppComponent'], function(AppCo
             manifest: "json",
             dependencies: {
                 libs: ["sap.m",
-                    "sap.se.mi.plm.lib.attachmentservice"
+                    "sap.se.mi.plm.lib.attachmentservice",
+                    "com.seagate.lib1"
                 ],
                 components: [
-                    "sap.se.mi.plm.lib.attachmentservice.attachment.components.stcomponent"
+                    "sap.se.mi.plm.lib.attachmentservice.attachment.components.stcomponent",
+                    "com.seagate.lib1.approvalflow.Component"
                 ]
             }
         }

@@ -1,0 +1,43 @@
+<core:FragmentDefinition 
+xmlns="sap.m" 
+xmlns:cs="com.seagate.lib" 
+xmlns:core="sap.ui.core" 
+xmlns:layout="sap.ui.layout"
+xmlns:smartForm="sap.ui.comp.smartform">
+<FlexBox wrap="Wrap">
+				<Avatar src="sap-icon://picture" backgroundColor="Random" displaySize="L" class="sapUiTinyMarginEnd"/>
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
+					<core:HTML content = "&lt;div class=&quot; seperator&quot;&gt;  &lt;/div&gt;"
+					> </core:HTML>
+				</layout:VerticalLayout>
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<Label text="Status"/>
+					<ObjectStatus text="New" state="Success" class="bold-header"/>
+					<!-- <cs:approvers text="Nachnani"></cs:approvers> -->
+				</layout:VerticalLayout>
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
+					<core:HTML content = "&lt;div class=&quot; seperator&quot;&gt;  &lt;/div&gt;"
+					> </core:HTML>
+				</layout:VerticalLayout>
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<ObjectStatus title="Functional Area" text="Developement"/>
+					<ObjectStatus title="Cost Center" text="PI DFA GD Programs and Product"/>
+					<ObjectStatus title="Email" text="email@address.com"/>
+				</layout:VerticalLayout>
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
+					<core:HTML content = "&lt;div class=&quot; seperator&quot;&gt;  &lt;/div&gt;"
+					> </core:HTML>
+				</layout:VerticalLayout>
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">					
+						<ObjectStatus text="Senior UI Developer" state="Success"/>
+						<RatingIndicator maxValue="6" value="5" tooltip="Rating Tooltip"/>
+				</layout:VerticalLayout>
+			</FlexBox>
+
+</core:FragmentDefinition>

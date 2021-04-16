@@ -70,7 +70,7 @@
     "sap.ui5": {
         "resources": {
             "js": [],
-            "css": []
+            "css": [{"uri": "css/style.css"}]
         },
         "dependencies": {
             "minUI5Version": "1.65.0",
@@ -86,7 +86,8 @@
                 },
                 "sap.se.mi.plm.lib.attachmentservice": {
 
-                }
+                },
+                "com.seagate.lib1":{}
             },
             "components": {}
         },
@@ -147,7 +148,24 @@
                             }
                         }
                     }
-                }
+                },
+                "sap.ui.viewExtensions": {
+					"sap.suite.ui.generic.template.ObjectPage.view.Details": {
+						"AfterMainContent|ZM_TRAV_REQ|chargecode": {
+							"className": "sap.ui.core.Fragment",
+							"fragmentName": "com.sap.fiori.travel.ext.view.fragment.chargecode",
+							"type": "XML",
+                            "showSideContent": true,
+                            "visible": "{= ${ui>/editable}}"							
+						},
+                        "ReplaceHeaderFacet|ZM_TRAV_REQ|headerEditable::header":{
+							"className": "sap.ui.core.Fragment",
+							"fragmentName": "com.sap.fiori.travel.ext.view.fragment.header",
+							"type": "XML",
+                            "bVisibleOnEdit": true							
+						}
+					}
+				}
             }
         },
         "contentDensities": {
@@ -206,7 +224,15 @@
                                     "objectType": "ZATTACH",
                                     "objectKey": "{parts:[{path:'Travreq'},{path:'DraftUUID'}],formatter:'com.sap.fiori.travel.model.formatter.returnAttachmentKey'}"
                                 }
-                            }  
+                            },
+                            "simple::Approval": {
+                                "id": "simple::Approval",
+                                "componentName": "com.seagate.lib1.approvalflow",
+                                "title": "Workflow",
+                                "settings": {                                                 
+                                    "objectKey": "{parts:[{path:'Travreq'},{path:'DraftUUID'}],formatter:'com.sap.fiori.travel.model.formatter.returnAttachmentKey'}"
+                                }
+                            }   
                         }
                     }
                 }

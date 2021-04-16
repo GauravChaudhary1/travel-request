@@ -1,0 +1,8 @@
+.seperator{
+    border-left: 1px solid grey !important;
+    height:5rem;
+}
+
+.bold-header{
+    font-weight: bold;
+}
